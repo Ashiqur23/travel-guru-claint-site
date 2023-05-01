@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const MainNav = () => {
+  const { user,logout } = useContext(AuthContext);
   return (
     <div className="w-full">
       <div className="container position-relative w-full">
@@ -10,7 +12,7 @@ const MainNav = () => {
           collapseOnSelect
           expand="lg"
           className=" top-0 w-100 position-absolute px-4"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.319)"}}
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.319)" }}
         >
           <Link to="/" className="m-0 logo">
             Travel Guru
@@ -37,9 +39,15 @@ const MainNav = () => {
               </Link>
             </Nav>
             <Nav>
-              <Link className="btn btn-warning text-black ms-lg-4" to="login">
-                Login
-              </Link>
+              {user ? (
+                <Link className="btn btn-warning text-black ms-lg-4" onClick={logout}>
+                  Logout
+                </Link>
+              ) : (
+                <Link className="btn btn-warning text-black ms-lg-4" to="/login">
+                  Login
+                </Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Navbar>

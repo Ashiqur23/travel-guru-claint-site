@@ -7,13 +7,9 @@ import Home from "./Home";
 const HeaderNav = () => {
   const [img, setImg] = useState(imgHeader);
   return (
-    <div
+    <div className="hero-img"
       style={{
-        height: "100vh",
-        background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) , url(${img})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
+        backgroundImage: `url('${img}`
       }}
     >
       <div className="w-100 container">

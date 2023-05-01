@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Place = () => {
+  const {user} = useContext(AuthContext)
+  const [error , setError] =useState("")
   const data = useLoaderData();
   console.log(data);
+  const handlePlace =(e)=>{
+    e.preventDefault()
+    const form = e.target
+    const origin =form.origin.value
+    const destination =form.destination.value
+    if(!origin || !destination ){
+      setError("Please Write something in the fields")
+      return
+    }
+  }
   return (
     <div
       className="bg-img"
@@ -23,38 +36,49 @@ const Place = () => {
             <p className="text-white w-75">{data?.description}</p>
           </div>
           <div className=" w-50">
-            <Form className="bg-white p-4 d-flex flex-column">
+            {error && <p className="text-danger">{error}</p>}
+            <Form onSubmit={handlePlace} className="bg-white p-4 d-flex flex-column">
               <Row className="mb-3">
                 <Form.Group md="4" controlId="validationCustom01">
-                  <Form.Label >Origin</Form.Label>
+                  <Form.Label>Origin</Form.Label>
                   <Form.Control
                     required
                     type="text"
                     placeholder="Origin"
-                    defaultValue="Mark"
+                    name="origin"
                   />
                 </Form.Group>
                 <Form.Group md="4" controlId="validationCustom02">
-                  <Form.Label >Destination</Form.Label>
+                  <Form.Label>Destination</Form.Label>
                   <Form.Control
                     required
                     type="text"
+                    name="destination"
                     placeholder="Destination"
-                    defaultValue="Otto"
                   />
                 </Form.Group>
                 <div className="d-flex justify-content-start align-items-center">
-                <Form.Group md="4" className="me-2" controlId="validationCustom02">
-                  <Form.Label >From</Form.Label> <br />
-                  <input type="date" />
-                </Form.Group>
-                <Form.Group md="4" className="me-2" controlId="validationCustom02">
-                  <Form.Label >To</Form.Label>  <br />
-                  <input type="date" />
-                </Form.Group>
+                  <Form.Group
+                    md="4"
+                    className="me-2"
+                    controlId="validationCustom02"
+                  >
+                    <Form.Label>From</Form.Label> <br />
+                    <input type="date" />
+                  </Form.Group>
+                  <Form.Group
+                    md="4"
+                    className="me-2"
+                    controlId="validationCustom02"
+                  >
+                    <Form.Label>To</Form.Label> <br />
+                    <input type="date" />
+                  </Form.Group>
                 </div>
               </Row>
-              <Button type="submit">Start Booking</Button>
+              <Link to={`/hotel/${data.id}`}>
+                <Button type="submit" className="btn-warning">Start Booking</Button>
+              </Link>
             </Form>
           </div>
         </div>

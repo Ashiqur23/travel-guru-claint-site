@@ -1,45 +1,55 @@
 import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
-const Login = () => {
-  const { logIn, user } = useContext(AuthContext);
-  const [errorMassage, setErrorMassage]= useState("")
-  const location = useLocation()
-  const navigate = useNavigate('')
-  const from = location?.state?.pathname || '/'
-  const handleLogin = (e) => {
-    e.preventDefault()
+const Register = () => {
+    const {signIn} = useContext(AuthContext)
+    const [errorMassage, setErrorMassage]= useState("")
+    const handleRegister=(e)=>{
+        e.preventDefault()
         const form = e.target
         const email = form.email.value
         const password = form.password.value
-        logIn(email,password)
+        signIn(email,password)
         .then(result =>{
-            const loggedUser = result.user
-            console.log(loggedUser);
+            const user = result.user
+            // console.log(user);
             form.reset()
-            navigate(from)
         })
         .catch(err=>{
             const errMassage = err.message
             setErrorMassage(errMassage)
         })
-  };
+    }
   return (
     <div className="container">
       <div
         className="d-flex flex-column justify-content-center align-content-center"
         style={{ height: "100vh" }}
       >
-        <h1 className="text-warning w-100 text-center">Please is login</h1>
+        <h1 className="text-warning w-100 text-center">Please is Register</h1>
         <div className="mt-5">
           <div className="">
-            <Form
-              onSubmit={handleLogin}
-              className="mx-auto "
-              style={{ width: "50%" }}
-            >
+            <Form className="mx-auto " onSubmit={handleRegister} style={{ width: "50%" }}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Your Name"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Photo Url</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="photo"
+                  required
+                  placeholder="Photo URL"
+                />
+              </Form.Group>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -67,11 +77,11 @@ const Login = () => {
                 errorMassage && <p>{errorMassage}</p>
               }
               <p>
-                Don't Have an Account?{" "}
-                <Link to="/register">Please Register</Link>
+                Already Have an Account?
+                <Link to="/login">Please login</Link>
               </p>
               <Button className="btn btn-warning" type="submit">
-                Login
+                Register
               </Button>
             </Form>
           </div>
@@ -81,4 +91,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

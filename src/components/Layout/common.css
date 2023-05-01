@@ -11,10 +11,12 @@
     font-weight: 700;
     font-size: 32px;
 }
-.nevbar{
+
+.nevbar {
     /* background-color: rgba(0, 0, 0, 0.319)";
     border: 1px solid red !important; */
 }
+
 .logo:hover {
     color: rgb(255, 217, 0);
 }
@@ -63,9 +65,10 @@
     height: 100%;
     object-fit: cover;
     border-radius: 40px;
-    box-shadow: 0px -95px 101px 5px rgba(0,0,0,0.19) inset;
+    box-shadow: 0px -95px 101px 5px rgba(0, 0, 0, 0.19) inset;
 }
-.swiper-slide h1{
+
+.swiper-slide h1 {
     text-align: center;
     width: 100%;
     color: rgb(255, 217, 0);
@@ -74,15 +77,26 @@
     font-size: 20px;
     /* border: 2px solid red; */
 }
+
 .swiper {
     width: 100%;
     height: 300px;
     margin: 20px auto;
 }
 
-a{
+a {
     text-decoration: none;
 }
-p{
+
+p {
     text-align: justify;
+}
+
+.hero-img {
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.315) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
 }

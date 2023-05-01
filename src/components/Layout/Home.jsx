@@ -7,6 +7,8 @@ import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper";
 
 import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee , faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Home = ({ setImg }) => {
   const [cards, setCards] = useState([]);
@@ -41,10 +43,10 @@ const Home = ({ setImg }) => {
           <button
             // onClick={handleBooking}
             style={{ border: "none", borderRadius: "10px" }}
-            className="bg-warning px-3 py-2"
+            className="bg-warning px-3 py-2 text-black"
           >
             Booking
-            {/* <FontAwesomeIcon icon={faCoffee}></FontAwesomeIcon> */}
+            <FontAwesomeIcon className="ms-2" icon={faArrowRight}></FontAwesomeIcon>
           </button>
         </Link>
       </div>
@@ -57,12 +59,12 @@ const Home = ({ setImg }) => {
           pagination={{
             type: "fraction",
           }}
-          navigation={true}
+          // navigation={true}
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
           {cards.map((card) => (
-            <SwiperSlide onClick={() => handleCardDetails(card?.id)} key={card.id}>
+            <SwiperSlide onClick={() => handleCardDetails(card?.id)} key={card?.id}>
               <h1>{card?.title}</h1>
               <img
                 onClick={() => setImg(card?.image)}
