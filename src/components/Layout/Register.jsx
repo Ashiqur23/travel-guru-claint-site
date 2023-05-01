@@ -1,27 +1,29 @@
 import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
-    const {signIn} = useContext(AuthContext)
-    const [errorMassage, setErrorMassage]= useState("")
-    const handleRegister=(e)=>{
-        e.preventDefault()
-        const form = e.target
-        const email = form.email.value
-        const password = form.password.value
-        signIn(email,password)
-        .then(result =>{
-            const user = result.user
-            // console.log(user);
-            form.reset()
-        })
-        .catch(err=>{
-            const errMassage = err.message
-            setErrorMassage(errMassage)
-        })
-    }
+  const { signIn } = useContext(AuthContext);
+  const [errorMassage, setErrorMassage] = useState("");
+  const navigate = useNavigate()
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        // console.log(user);
+        form.reset();
+        navigate('/')
+      })
+      .catch((err) => {
+        const errMassage = err.message;
+        setErrorMassage(errMassage);
+      });
+  };
   return (
     <div className="container">
       <div
@@ -31,7 +33,11 @@ const Register = () => {
         <h1 className="text-warning w-100 text-center">Please is Register</h1>
         <div className="mt-5">
           <div className="">
-            <Form className="mx-auto " onSubmit={handleRegister} style={{ width: "50%" }}>
+            <Form
+              className="mx-auto "
+              onSubmit={handleRegister}
+              style={{ width: "50%" }}
+            >
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -73,9 +79,7 @@ const Register = () => {
                   required
                 />
               </Form.Group>
-              {
-                errorMassage && <p>{errorMassage}</p>
-              }
+              {errorMassage && <p>{errorMassage}</p>}
               <p>
                 Already Have an Account?
                 <Link to="/login">Please login</Link>
