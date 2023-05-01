@@ -1,23 +1,31 @@
 import React, { useContext, useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
-import { Link, useLoaderData } from "react-router-dom";
+import {  useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
+import { RangeDatePicker } from 'react-google-flight-datepicker';
+import 'react-google-flight-datepicker/dist/main.css';
+
+import './common.css'
+
 const Place = () => {
-  const {user} = useContext(AuthContext)
-  const [error , setError] =useState("")
+  const { user } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const data = useLoaderData();
-  console.log(data);
-  const handlePlace =(e)=>{
-    e.preventDefault()
-    const form = e.target
-    const origin =form.origin.value
-    const destination =form.destination.value
-    if(!origin || !destination ){
-      setError("Please Write something in the fields")
-      return
+  const navigate = useNavigate();
+  // console.log(data);
+  const handlePlace = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const origin = form.origin.value;
+    const destination = form.destination.value;
+    if (!origin || !destination) {
+      setError("Please Write something in the fields");
+    } else {
+      navigate(`/hotel/${data.id}`);
     }
-  }
+  };
+
   return (
     <div
       className="bg-img"
@@ -37,7 +45,10 @@ const Place = () => {
           </div>
           <div className=" w-50">
             {error && <p className="text-danger">{error}</p>}
-            <Form onSubmit={handlePlace} className="bg-white p-4 d-flex flex-column">
+            <Form
+              onSubmit={handlePlace}
+              className="bg-white p-4 d-flex flex-column"
+            >
               <Row className="mb-3">
                 <Form.Group md="4" controlId="validationCustom01">
                   <Form.Label>Origin</Form.Label>
@@ -64,21 +75,31 @@ const Place = () => {
                     controlId="validationCustom02"
                   >
                     <Form.Label>From</Form.Label> <br />
-                    <input type="date" />
-                  </Form.Group>
-                  <Form.Group
-                    md="4"
-                    className="me-2"
-                    controlId="validationCustom02"
-                  >
-                    <Form.Label>To</Form.Label> <br />
-                    <input type="date" />
+                    {/* <input type="date" required /> */}
+                    <RangeDatePicker
+                      startDate={new Date()}
+                      endDate={new Date()}
+                      onChange={(startDate, endDate) =>
+                        onDateChange(startDate, endDate)
+                      }
+                      minDate={new Date(1900, 0, 1)}
+                      maxDate={new Date(2100, 0, 1)}
+                      dateFormat="D"
+                      monthFormat="MMM YYYY"
+                      startDatePlaceholder="Start Date"
+                      endDatePlaceholder="End Date"
+                      disabled={false}
+                      className="my-own-class-name"
+                      startWeekDay="monday"
+                      required
+                    />
                   </Form.Group>
                 </div>
               </Row>
-              <Link to={`/hotel/${data.id}`}>
-                <Button type="submit" className="btn-warning">Start Booking</Button>
-              </Link>
+
+              <Button type="submit" className="btn-warning">
+                Start Booking
+              </Button>
             </Form>
           </div>
         </div>
